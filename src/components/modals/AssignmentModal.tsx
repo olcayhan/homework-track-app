@@ -15,7 +15,7 @@ export function AssignmentModal() {
       <DialogTrigger asChild>
         <Button className="w-full">Add Assignment</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] lg:max-w-[800px]">
+      <DialogContent className="sm:max-w-[425px] lg:max-w-[800px] lg:max-h-[700px] overflow-auto">
         <DialogHeader>
           <DialogTitle>Add Assignment</DialogTitle>
           <DialogDescription>

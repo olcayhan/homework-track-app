@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,6 +19,7 @@ import { Calendar } from "./ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
+import ImageUpload from "./ImageUpload";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -30,8 +29,11 @@ const formSchema = z.object({
     message: "Description must be at least 2 characters.",
   }),
   date: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "Expired Date is required.",
   }),
+  file_upload: z.array(
+    z.object({ path: z.string(), size: z.number(), url: z.string() })
+  ),
 });
 
 export function AssignmentForm() {
@@ -40,6 +42,7 @@ export function AssignmentForm() {
     defaultValues: {
       title: "",
       description: "",
+      file_upload: [],
     },
   });
 
@@ -52,7 +55,7 @@ export function AssignmentForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="title"
@@ -84,7 +87,7 @@ export function AssignmentForm() {
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Expired Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -109,13 +112,24 @@ export function AssignmentForm() {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
+                    disabled={(date) => date < new Date()}
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="file_upload"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>File Upload</FormLabel>
+              <FormControl>
+                <ImageUpload value={field.value} onChange={field.onChange} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
