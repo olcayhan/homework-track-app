@@ -1,6 +1,5 @@
 import AssignmentItem, { Assignment } from "./components/AssignmentItem";
 import { AssignmentModal } from "./components/modals/AssignmentModal";
-import { Button } from "./components/ui/button";
 
 function App() {
   const assignments: Assignment[] = [

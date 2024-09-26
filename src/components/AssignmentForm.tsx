@@ -20,6 +20,7 @@ import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import ImageUpload from "./ImageUpload";
+import RichTextEditor from "./RichTextEditor";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -76,7 +77,7 @@ export function AssignmentForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="This is an assignment for ..." {...field} />
+                <RichTextEditor field={field} />
               </FormControl>
               <FormMessage />
             </FormItem>
