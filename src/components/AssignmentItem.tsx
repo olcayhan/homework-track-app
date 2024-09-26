@@ -9,12 +9,10 @@ import {
 import { Button } from "./ui/button";
 
 export type Assignment = {
-  id: string;
   title: string;
   description: string;
-  images: string[];
-  expiredDate: string;
-  status: string;
+  fileUpload: any[];
+  expiredDate: Date;
 };
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
@@ -23,13 +21,24 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
       <CardHeader>
         <CardTitle className="flex flex-row justify-between">
           <p>{assignment.title}</p>
-          <p className="text-sm">Expired date: {assignment.expiredDate}</p>
+          <p className="text-sm">
+            Expired date: {assignment.expiredDate.toLocaleDateString("tr-TR")}
+          </p>
         </CardTitle>
-        <CardDescription>{assignment.description}</CardDescription>
+        <CardDescription
+          dangerouslySetInnerHTML={{ __html: assignment.description }}
+        ></CardDescription>
       </CardHeader>
       <CardContent className="flex flex-row gap-2 justify-start items-center flex-wrap">
-        {assignment.images.map((image) => (
-          <img key={image} src={image} alt={image} className="w-32" />
+        {assignment.fileUpload.map((file) => (
+          <a
+            key={file.url}
+            className="bg-blue-500 px-2 py-1 font-semibold text-white"
+            target="_blank"
+            href={file.url}
+          >
+            {file.path}
+          </a>
         ))}
       </CardContent>
       <CardFooter>

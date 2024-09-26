@@ -43,13 +43,13 @@ function ImageUpload({ value, onChange }: { value: any[]; onChange: any }) {
 
   const files = value.map((file: any) => (
     <li key={file.url}>
-      {file.path} - {file.size} bytes -{" "}
       <a
+        key={file.url}
         className="bg-blue-500 px-2 py-1 font-semibold text-white"
         target="_blank"
         href={file.url}
       >
-        Download
+        {file.path}
       </a>
     </li>
   ));

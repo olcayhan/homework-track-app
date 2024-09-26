@@ -21,6 +21,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import ImageUpload from "./ImageUpload";
 import RichTextEditor from "./RichTextEditor";
+import useAssignment from "@/hooks/useAssignment";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -29,29 +30,27 @@ const formSchema = z.object({
   description: z.string().min(2, {
     message: "Description must be at least 2 characters.",
   }),
-  date: z.date({
+  expiredDate: z.date({
     required_error: "Expired Date is required.",
   }),
-  file_upload: z.array(
+  fileUpload: z.array(
     z.object({ path: z.string(), size: z.number(), url: z.string() })
   ),
 });
 
 export function AssignmentForm() {
+  const addAssignment = useAssignment((state) => state.addAssignment);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
-      file_upload: [],
+      fileUpload: [],
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    addAssignment(values);
   }
 
   return (
@@ -85,7 +84,7 @@ export function AssignmentForm() {
         />
         <FormField
           control={form.control}
-          name="date"
+          name="expiredDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Expired Date</FormLabel>
@@ -124,7 +123,7 @@ export function AssignmentForm() {
         />
         <FormField
           control={form.control}
-          name="file_upload"
+          name="fileUpload"
           render={({ field }) => (
             <FormItem>
               <FormLabel>File Upload</FormLabel>
