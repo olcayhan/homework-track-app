@@ -1,7 +1,5 @@
-import { Assignment } from "@/components/AssignmentItem";
+import { Assignment } from "@/types/Assignment";
 import { create } from "zustand";
-
-
 
 type Store = {
   assignment: Assignment[];

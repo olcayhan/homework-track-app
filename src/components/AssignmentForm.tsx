@@ -53,7 +53,7 @@ export function AssignmentForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    addAssignment(values);
+    addAssignment({ ...values, id: Date.now() });
     setOpen(false);
   }
 
@@ -80,10 +80,7 @@ export function AssignmentForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <RichTextEditor
-                  value={field.value}
-                  onChange={field.onChange}
-                />
+                <RichTextEditor value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
