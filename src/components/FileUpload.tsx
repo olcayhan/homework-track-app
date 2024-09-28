@@ -11,38 +11,53 @@ function FileUpload({
   onChange,
 }: {
   value: FileType[];
-  onChange: (event:FileType[]) => void;
+  onChange: (event: FileType[]) => void;
 }) {
   const [progress, setProgress] = useState<number | null>(null);
 
   const onDrop = useCallback(
     (acceptedFiles: globalThis.File[]) => {
-      if (!acceptedFiles) return;
-      acceptedFiles.map((file: globalThis.File) => {
-        const storageRef = ref(storage, `files/${Date.now() + file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
+      if (!acceptedFiles || acceptedFiles.length === 0) return;
 
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const prog =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setProgress(prog);
-          },
-          (error) => {
-            console.error("Upload error:", error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              onChange([
-                ...value,
-                { path: file.name, size: file.size, url: downloadURL },
-              ]);
-              setProgress(null);
-            });
-          }
-        );
+      const uploadPromises = acceptedFiles.map((file: globalThis.File) => {
+        return new Promise<FileType>((resolve, reject) => {
+          const storageRef = ref(storage, `files/${Date.now() + file.name}`);
+          const uploadTask = uploadBytesResumable(storageRef, file);
+
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const prog =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              setProgress(prog);
+            },
+            (error) => {
+              console.error("Upload error:", error);
+              reject(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then((downloadURL) => {
+                  resolve({
+                    path: file.name,
+                    size: file.size,
+                    url: downloadURL,
+                  });
+                })
+                .catch((error) => reject(error));
+            }
+          );
+        });
       });
+
+      Promise.all(uploadPromises)
+        .then((uploadedFiles) => {
+          onChange([...value, ...uploadedFiles]);
+          setProgress(null);
+        })
+        .catch((error) => {
+          console.error("Error uploading one or more files:", error);
+        });
     },
     [onChange, value]
   );
