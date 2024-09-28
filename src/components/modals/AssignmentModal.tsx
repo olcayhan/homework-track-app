@@ -18,7 +18,7 @@ export function AssignmentModal() {
         <Button
           className="w-full"
           onClick={() => {
-            isEditing(false, 0);
+            isEditing(false, null);
             setOpen(true);
           }}
         >

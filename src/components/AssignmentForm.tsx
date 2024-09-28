@@ -63,10 +63,10 @@ export function AssignmentForm() {
         fileUpload: selectedAssignment?.fileUpload,
       });
     }
-  }, [edit.isEdit, edit.id, assignment]);
+  }, [edit.isEdit, edit.id, assignment, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (edit.isEdit) {
+    if (edit.isEdit && edit.id !== null) {
       editAssignment({ ...values, id: edit.id });
     } else {
       addAssignment({ ...values, id: Date.now() });

@@ -4,9 +4,9 @@ type Store = {
   open: boolean;
   edit: {
     isEdit: boolean;
-    id: number;
+    id: number | null;
   };
-  isEditing: (open: boolean, id: number) => void;
+  isEditing: (open: boolean, id: number | null) => void;
   setOpen: (open: boolean) => void;
 };
 
