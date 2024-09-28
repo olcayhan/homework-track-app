@@ -8,13 +8,7 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { FileIcon } from "react-file-icon";
-
-export type Assignment = {
-  title: string;
-  description: string;
-  fileUpload: any[];
-  expiredDate: Date;
-};
+import { Assignment } from "@/types/Assignment";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
   return (

@@ -4,7 +4,7 @@ import { create } from "zustand";
 
 
 type Store = {
-  assignment: any[];
+  assignment: Assignment[];
   addAssignment: (assignment: Assignment) => void;
 };
 

@@ -4,14 +4,21 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { Progress } from "./ui/progress";
 import { FileIcon } from "react-file-icon";
+import { FileType } from "@/types/Assignment";
 
-function FileUpload({ value, onChange }: { value: any[]; onChange: any }) {
-  const [progress, setProgress] = useState<any>(null);
+function FileUpload({
+  value,
+  onChange,
+}: {
+  value: FileType[];
+  onChange: (event:FileType[]) => void;
+}) {
+  const [progress, setProgress] = useState<number | null>(null);
 
   const onDrop = useCallback(
-    (acceptedFiles: any) => {
+    (acceptedFiles: globalThis.File[]) => {
       if (!acceptedFiles) return;
-      acceptedFiles.map((file: any) => {
+      acceptedFiles.map((file: globalThis.File) => {
         const storageRef = ref(storage, `files/${Date.now() + file.name}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -42,7 +49,7 @@ function FileUpload({ value, onChange }: { value: any[]; onChange: any }) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const files = value.map((file: any) => (
+  const files = value.map((file: FileType) => (
     <li key={file.url}>
       <a
         key={file.url}

@@ -41,7 +41,7 @@ const formSchema = z.object({
 
 export function AssignmentForm() {
   const addAssignment = useAssignment((state) => state.addAssignment);
-  const  {setOpen} = useModal();
+  const { setOpen } = useModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,7 +80,10 @@ export function AssignmentForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <RichTextEditor field={field} />
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
