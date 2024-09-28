@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import ImageUpload from "./ImageUpload";
 import RichTextEditor from "./RichTextEditor";
 import useAssignment from "@/hooks/useAssignment";
+import useModal from "@/hooks/useModal";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -40,6 +41,8 @@ const formSchema = z.object({
 
 export function AssignmentForm() {
   const addAssignment = useAssignment((state) => state.addAssignment);
+  const  {setOpen} = useModal();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,6 +54,7 @@ export function AssignmentForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     addAssignment(values);
+    setOpen(false);
   }
 
   return (
