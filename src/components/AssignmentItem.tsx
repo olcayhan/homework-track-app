@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
+import { FileIcon } from "react-file-icon";
 
 export type Assignment = {
   title: string;
@@ -33,11 +34,16 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
         {assignment.fileUpload.map((file) => (
           <a
             key={file.url}
-            className="bg-blue-500 px-2 py-1 font-semibold text-white"
+            className="px-2 py-1 font-semibold text-white"
             target="_blank"
             href={file.url}
           >
-            {file.path}
+            <div className="w-16 h-24">
+              <FileIcon extension={file.path.split(".").pop()} />
+              <p className="text-neutral-950 text-sm truncate hover:text-clip hover:text-wrap hover:overflow-visible">
+                {file.path}
+              </p>
+            </div>
           </a>
         ))}
       </CardContent>

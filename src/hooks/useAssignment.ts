@@ -1,8 +1,11 @@
+import { Assignment } from "@/components/AssignmentItem";
 import { create } from "zustand";
+
+
 
 type Store = {
   assignment: any[];
-  addAssignment: (assignment: any) => void;
+  addAssignment: (assignment: Assignment) => void;
 };
 
 const useAssignment = create<Store>()((set) => ({

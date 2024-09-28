@@ -3,8 +3,9 @@ import { useDropzone } from "react-dropzone";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { Progress } from "./ui/progress";
+import { FileIcon } from "react-file-icon";
 
-function ImageUpload({ value, onChange }: { value: any[]; onChange: any }) {
+function FileUpload({ value, onChange }: { value: any[]; onChange: any }) {
   const [progress, setProgress] = useState<any>(null);
 
   const onDrop = useCallback(
@@ -45,11 +46,16 @@ function ImageUpload({ value, onChange }: { value: any[]; onChange: any }) {
     <li key={file.url}>
       <a
         key={file.url}
-        className="bg-blue-500 px-2 py-1 font-semibold text-white"
+        className="px-2 py-1 font-semibold text-white"
         target="_blank"
         href={file.url}
       >
-        {file.path}
+        <div className="w-16 h-24">
+          <FileIcon extension={file.path.split(".").pop()} />
+          <p className="text-neutral-950 text-sm truncate hover:text-clip hover:text-wrap hover:overflow-visible">
+            {file.path}
+          </p>
+        </div>
       </a>
     </li>
   ));
@@ -70,10 +76,10 @@ function ImageUpload({ value, onChange }: { value: any[]; onChange: any }) {
 
       <div className="mt-2">
         {progress !== null && <Progress value={progress} className="mt-2" />}
-        <ul className="flex flex-col gap-2 justify-start">{files}</ul>
+        <ul className="flex flex-row gap-8 justify-start">{files}</ul>
       </div>
     </div>
   );
 }
 
-export default ImageUpload;
+export default FileUpload;

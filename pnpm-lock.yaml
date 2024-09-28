@@ -29,6 +29,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.9)(react@18.3.1)
+      '@types/react-file-icon':
+        specifier: ^1.0.4
+        version: 1.0.4
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1049,6 +1052,9 @@ packages:
 
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
+
+  '@types/react-file-icon@1.0.4':
+    resolution: {integrity: sha512-c1mIklUDaxm9odxf8RTiy/EAxsblZliJ86EKIOAyuafP9eK3iudyn4ATv53DX6ZvgGymc7IttVNm97LTGnTiYA==}
 
   '@types/react@18.3.9':
     resolution: {integrity: sha512-+BpAVyTpJkNWWSSnaLBk6ePpHLOGJKnEQNbINNovPWzvEUyAe3e+/d494QdEh71RekM/qV7lw6jzf1HGrJyAtQ==}
@@ -3223,6 +3229,10 @@ snapshots:
       parchment: 1.1.4
 
   '@types/react-dom@18.3.0':
+    dependencies:
+      '@types/react': 18.3.9
+
+  '@types/react-file-icon@1.0.4':
     dependencies:
       '@types/react': 18.3.9
 

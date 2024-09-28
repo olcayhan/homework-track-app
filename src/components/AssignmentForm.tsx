@@ -19,10 +19,10 @@ import { Calendar } from "./ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
-import ImageUpload from "./ImageUpload";
 import RichTextEditor from "./RichTextEditor";
 import useAssignment from "@/hooks/useAssignment";
 import useModal from "@/hooks/useModal";
+import FileUpload from "./FileUpload";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -132,7 +132,7 @@ export function AssignmentForm() {
             <FormItem>
               <FormLabel>File Upload</FormLabel>
               <FormControl>
-                <ImageUpload value={field.value} onChange={field.onChange} />
+                <FileUpload value={field.value} onChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
