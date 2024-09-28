@@ -9,8 +9,10 @@ import {
 import { Button } from "./ui/button";
 import { FileIcon } from "react-file-icon";
 import { Assignment } from "@/types/Assignment";
+import useModal from "@/hooks/useModal";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
+  const { setOpen, isEditing } = useModal();
   return (
     <Card className="w-full">
       <CardHeader>
@@ -42,7 +44,15 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
         ))}
       </CardContent>
       <CardFooter>
-        <Button className="ml-auto">Edit</Button>
+        <Button
+          className="ml-auto"
+          onClick={() => {
+            isEditing(true, assignment.id);
+            setOpen(true);
+          }}
+        >
+          Edit
+        </Button>
       </CardFooter>
     </Card>
   );

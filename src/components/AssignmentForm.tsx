@@ -23,6 +23,7 @@ import RichTextEditor from "./RichTextEditor";
 import useAssignment from "@/hooks/useAssignment";
 import useModal from "@/hooks/useModal";
 import FileUpload from "./FileUpload";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -40,8 +41,8 @@ const formSchema = z.object({
 });
 
 export function AssignmentForm() {
-  const addAssignment = useAssignment((state) => state.addAssignment);
-  const { setOpen } = useModal();
+  const { addAssignment, editAssignment, assignment } = useAssignment();
+  const { setOpen, edit } = useModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,9 +53,26 @@ export function AssignmentForm() {
     },
   });
 
+  useEffect(() => {
+    if (edit.isEdit) {
+      const selectedAssignment = assignment.find((item) => item.id === edit.id);
+      form.reset({
+        title: selectedAssignment?.title,
+        description: selectedAssignment?.description,
+        expiredDate: selectedAssignment?.expiredDate,
+        fileUpload: selectedAssignment?.fileUpload,
+      });
+    }
+  }, [edit.isEdit, edit.id, assignment]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    addAssignment({ ...values, id: Date.now() });
+    if (edit.isEdit) {
+      editAssignment({ ...values, id: edit.id });
+    } else {
+      addAssignment({ ...values, id: Date.now() });
+    }
     setOpen(false);
+    form.reset();
   }
 
   return (
