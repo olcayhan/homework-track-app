@@ -5,6 +5,7 @@ type Store = {
   assignment: Assignment[];
   addAssignment: (assignment: Assignment) => void;
   editAssignment: (assignment: Assignment) => void;
+  deleteAssignment: (id: number) => void;
 };
 
 const useAssignment = create<Store>()((set) => ({
@@ -16,6 +17,10 @@ const useAssignment = create<Store>()((set) => ({
       assignment: state.assignment.map((item) =>
         item.id === assignment.id ? assignment : item
       ),
+    })),
+  deleteAssignment: (id: number) =>
+    set((state) => ({
+      assignment: state.assignment.filter((item) => item.id !== id),
     })),
 }));
 
