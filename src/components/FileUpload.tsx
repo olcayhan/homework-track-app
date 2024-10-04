@@ -5,6 +5,8 @@ import { storage } from "../firebase";
 import { Progress } from "./ui/progress";
 import { FileIcon } from "react-file-icon";
 import { FileType } from "@/types/Assignment";
+import { Trash } from "lucide-react";
+import { Button } from "./ui/button";
 
 function FileUpload({
   value,
@@ -65,7 +67,18 @@ function FileUpload({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const files = value.map((file: FileType) => (
-    <li key={file.url}>
+    <li className="relative" key={file.url}>
+      <Button
+        className="absolute right-0 top-4 rounded-full bg-red-600 hover:bg-red-700"
+        type="button"
+        size={"icon"}
+        onClick={(e) => {
+          e.stopPropagation();
+          onChange(value.filter((f) => f.url !== file.url));
+        }}
+      >
+        <Trash className="w-4 h-4" />
+      </Button>
       <a
         key={file.url}
         className="px-2 py-1 font-semibold text-white"
