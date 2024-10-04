@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { AssignmentForm } from "../AssignmentForm";
 import useModal from "@/hooks/useModal";
+import { Plus } from "lucide-react";
 
 export function AssignmentModal() {
   const { open, setOpen, edit, isEditing } = useModal();
@@ -22,6 +23,7 @@ export function AssignmentModal() {
             setOpen(true);
           }}
         >
+          <Plus className="w-4 h-4 mr-1" />
           Add Assignment
         </Button>
       </DialogTrigger>
