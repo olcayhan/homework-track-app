@@ -9,9 +9,11 @@ import { Trash } from "lucide-react";
 import { Button } from "./ui/button";
 
 function FileUpload({
+  multiple = false,
   value,
   onChange,
 }: {
+  multiple?: boolean;
   value: FileType[];
   onChange: (event: FileType[]) => void;
 }) {
@@ -54,7 +56,9 @@ function FileUpload({
 
       Promise.all(uploadPromises)
         .then((uploadedFiles) => {
-          onChange([...value, ...uploadedFiles]);
+          multiple
+            ? onChange([...value, ...uploadedFiles])
+            : onChange(uploadedFiles);
           setProgress(null);
         })
         .catch((error) => {
@@ -64,7 +68,10 @@ function FileUpload({
     [onChange, value]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple,
+  });
 
   const files = value.map((file: FileType) => (
     <li className="relative" key={file.url}>

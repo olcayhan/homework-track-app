@@ -150,7 +150,11 @@ export function AssignmentForm() {
             <FormItem>
               <FormLabel>File Upload</FormLabel>
               <FormControl>
-                <FileUpload value={field.value} onChange={field.onChange} />
+                <FileUpload
+                  multiple={true}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
