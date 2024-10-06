@@ -5,8 +5,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/card";
+import { Button } from "../ui/button";
 import { FileIcon } from "react-file-icon";
 import { Assignment } from "@/types/Assignment";
 import useModal from "@/hooks/useModal";
@@ -21,7 +21,7 @@ import {
   AlertDialogTrigger,
   AlertDialogFooter,
   AlertDialogHeader,
-} from "./ui/alert-dialog";
+} from "../ui/alert-dialog";
 import useAssignment from "@/hooks/useAssignment";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {

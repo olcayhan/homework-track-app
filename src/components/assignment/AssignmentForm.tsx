@@ -15,14 +15,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "./ui/calendar";
+import { Calendar } from "../ui/calendar";
 import { CalendarIcon } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
-import RichTextEditor from "./RichTextEditor";
+import RichTextEditor from "../RichTextEditor";
 import useAssignment from "@/hooks/useAssignment";
 import useModal from "@/hooks/useModal";
-import FileUpload from "./FileUpload";
+import FileUpload from "../FileUpload";
 import { useEffect } from "react";
 
 const formSchema = z.object({

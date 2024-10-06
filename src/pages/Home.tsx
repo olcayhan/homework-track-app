@@ -1,7 +1,7 @@
 import { File } from "lucide-react";
 
 import { AssignmentModal } from "@/components/modals/AssignmentModal";
-import AssignmentItem from "@/components/AssignmentItem";
+import AssignmentItem from "@/components/assignment/AssignmentItem";
 import useAssignment from "@/hooks/useAssignment";
 import NotFound from "@/components/NotFound";
 

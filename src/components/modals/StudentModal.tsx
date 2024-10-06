@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AssignmentForm } from "../assignment/AssignmentForm";
 import useModal from "@/hooks/useModal";
 import { Plus } from "lucide-react";
+import { StudentForm } from "../student/StudentForm";
 
-export function AssignmentModal() {
+export function StudentModal() {
   const { open, setOpen, edit, isEditing } = useModal();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -24,21 +24,21 @@ export function AssignmentModal() {
           }}
         >
           <Plus className="w-4 h-4 mr-1" />
-          Add Assignment
+          Add Student
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] lg:max-w-[800px] lg:max-h-[700px] overflow-auto">
         <DialogHeader>
           <DialogTitle>
-            {edit.isEdit ? "Edit Assignment" : "Add Assignment"}
+            {edit.isEdit ? "Edit Student" : "Add Student"}
           </DialogTitle>
           <DialogDescription>
             {edit.isEdit
-              ? "Edit your assignment and update"
-              : "Create a new assignment for your students."}
+              ? "Edit your student information and save it"
+              : "Add your student and assign them to the assignment"}
           </DialogDescription>
         </DialogHeader>
-        <AssignmentForm />
+        <StudentForm />
       </DialogContent>
     </Dialog>
   );
