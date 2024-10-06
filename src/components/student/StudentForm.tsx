@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import PasswordInput from "../PasswordInput";
+import ImageUpload from "../ImageUpload";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -40,6 +41,7 @@ const formSchema = z.object({
   studentNumber: z.string().min(2, {
     message: "Description must be at least 2 characters.",
   }),
+  profileImagePath: z.string(),
 });
 
 export function StudentForm() {
@@ -51,6 +53,7 @@ export function StudentForm() {
       email: "",
       password: "",
       studentNumber: "",
+      profileImagePath: "",
     },
   });
 
@@ -61,6 +64,19 @@ export function StudentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="profileImagePath"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Profile Image</FormLabel>
+              <FormControl>
+                <ImageUpload value={field.value} onChange={field.onChange} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="name"
