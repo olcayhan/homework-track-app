@@ -3,6 +3,9 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Submission from "./pages/Submission";
 import Student from "./pages/Student";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   return (
@@ -13,6 +16,9 @@ function App() {
           <Route path="/submission" element={<Submission />} />
           <Route path="/student" element={<Student />} />
         </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgetPassword />} />
       </Routes>
     </BrowserRouter>
   );
