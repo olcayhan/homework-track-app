@@ -14,10 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 
 import RichTextEditor from "../RichTextEditor";
-import useAssignment from "@/hooks/useAssignment";
 import useModal from "@/hooks/useModal";
 import { useEffect } from "react";
 import ImageUpload from "../ImageUpload";
+import useCourse from "@/hooks/useCourse";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -26,13 +26,11 @@ const formSchema = z.object({
   description: z.string().min(2, {
     message: "Description must be at least 2 characters.",
   }),
-  expiredDate: z.date({
-    required_error: "Expired Date is required.",
-  }),
+  imageURL: z.string().optional(),
 });
 
 export function CourseForm() {
-  const { addAssignment, editAssignment, assignment } = useAssignment();
+  const { addCourse, editCourse, course } = useCourse();
   const { setOpen, edit } = useModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,18 +43,20 @@ export function CourseForm() {
 
   useEffect(() => {
     if (edit.isEdit) {
-      const selectedAssignment = assignment.find((item) => item.id === edit.id);
+      const selectedCourse = course.find((item) => item.id === edit.id);
       form.reset({
-        name: selectedAssignment?.title,
-        description: selectedAssignment?.description,
-        expiredDate: selectedAssignment?.expiredDate,
+        name: selectedCourse?.name,
+        description: selectedCourse?.description,
+        imageURL: selectedCourse?.imageURL,
       });
     }
-  }, [edit.isEdit, edit.id, assignment, form]);
+  }, [edit.isEdit, edit.id, course, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (edit.isEdit && edit.id !== null) {
+      editCourse({ ...values, id: edit.id });
     } else {
+      addCourse({ ...values, id: Date.now() });
     }
     setOpen(false);
     form.reset();
@@ -67,7 +67,7 @@ export function CourseForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="imageURL"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Image</FormLabel>

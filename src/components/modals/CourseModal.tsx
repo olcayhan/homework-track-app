@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import useModal from "@/hooks/useModal";
 import { Plus } from "lucide-react";
-import { CourseForm } from "../class/CourseForm";
+import { CourseForm } from "../course/CourseForm";
 
 export function CourseModal() {
   const { open, setOpen, edit, isEditing } = useModal();

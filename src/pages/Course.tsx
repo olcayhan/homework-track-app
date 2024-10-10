@@ -1,20 +1,22 @@
 import { School } from "lucide-react";
 
-import AssignmentItem from "@/components/assignment/AssignmentItem";
-import useAssignment from "@/hooks/useAssignment";
 import NotFound from "@/components/NotFound";
 import { CourseModal } from "@/components/modals/CourseModal";
+import useCourse from "@/hooks/useCourse";
+import CourseItem from "@/components/course/CourseItem";
 
 export default function Course() {
-  const assignments = useAssignment((state) => state.assignment);
+  const courses = useCourse((state) => state.course);
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-start p-3 gap-3">
       <CourseModal />
-      {assignments.length > 0 ? (
-        assignments.map((assignment) => (
-          <AssignmentItem key={assignment.id} assignment={assignment} />
-        ))
+      {courses.length > 0 ? (
+        <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3">
+          {courses.map((course) => (
+            <CourseItem key={course.id} course={course} />
+          ))}
+        </div>
       ) : (
         <NotFound
           Icon={School}

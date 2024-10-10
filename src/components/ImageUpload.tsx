@@ -10,7 +10,7 @@ function ImageUpload({
   value,
   onChange,
 }: {
-  value: string;
+  value: string | undefined;
   onChange: (event: string) => void;
 }) {
   const [progress, setProgress] = useState<number | null>(null);
