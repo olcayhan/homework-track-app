@@ -18,8 +18,8 @@ export default function Course() {
       ) : (
         <NotFound
           Icon={School}
-          title="No class found"
-          description="You currently have no class."
+          title="No course found"
+          description="You currently have no course."
         />
       )}
     </div>

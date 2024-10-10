@@ -22,8 +22,8 @@ export default function Sidebar() {
     },
     {
       icon: School,
-      title: "Classes",
-      href: "/class",
+      title: "Courses",
+      href: "/course",
     },
   ];
   return (
