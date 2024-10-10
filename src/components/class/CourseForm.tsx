@@ -31,7 +31,7 @@ const formSchema = z.object({
   }),
 });
 
-export function ClassForm() {
+export function CourseForm() {
   const { addAssignment, editAssignment, assignment } = useAssignment();
   const { setOpen, edit } = useModal();
 

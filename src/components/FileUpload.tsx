@@ -106,14 +106,14 @@ function FileUpload({
     <div>
       <div
         {...getRootProps()}
-        className="border-2 border-neutral-400 p-10 border-dashed"
+        className="border-2 rounded-lg border-neutral-400 p-10 border-dashed"
       >
         <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag and drop some files here, or click to select files</p>
-        )}
+        <p className="text-center">
+          {isDragActive
+            ? " Drop the files here ..."
+            : "Drag and drop some files here, or click to select files"}
+        </p>
       </div>
 
       <div className="mt-2">

@@ -6,7 +6,7 @@ import Student from "./pages/Student";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgetPassword from "./pages/ForgetPassword";
-import Class from "./pages/Class";
+import Class from "./pages/Course";
 
 function App() {
   return (
