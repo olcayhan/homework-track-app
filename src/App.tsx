@@ -6,6 +6,7 @@ import Student from "./pages/Student";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgetPassword from "./pages/ForgetPassword";
+import Class from "./pages/Class";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="/class" element={<Class />} />
           <Route path="/submission" element={<Submission />} />
           <Route path="/student" element={<Student />} />
         </Route>

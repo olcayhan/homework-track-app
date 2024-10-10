@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { Progress } from "./ui/progress";
-import { User } from "lucide-react";
+import { Image } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 function ImageUpload({
@@ -50,7 +50,7 @@ function ImageUpload({
       <Avatar className="w-32 h-32 cursor-pointer" {...getRootProps()}>
         <AvatarImage src={value} alt="@shadcn" />
         <AvatarFallback>
-          <User className="h-12 w-12" />
+          <Image className="h-12 w-12" />
         </AvatarFallback>
         <input {...getInputProps()} />
       </Avatar>
