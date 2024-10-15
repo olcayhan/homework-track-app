@@ -23,7 +23,10 @@ const CourseItem = ({ course }: { course: Course }) => {
   const navigate = useNavigate();
   const { deleteCourse } = useCourse();
   return (
-    <Card className="cursor-pointer" onClick={() => navigate(`/course/${course.id}`)}>
+    <Card
+      className="cursor-pointer"
+      onClick={() => navigate(`/course/${course.id}`)}
+    >
       <CardHeader className="relative">
         <Popover>
           <PopoverTrigger asChild>
@@ -36,7 +39,11 @@ const CourseItem = ({ course }: { course: Course }) => {
               <EllipsisVertical />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-56" align="start">
+          <PopoverContent
+            className="w-56"
+            align="start"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="grid gap-4">
               <h4 className="font-medium leading-none">Options</h4>
               <div className="grid gap-2">
