@@ -1,4 +1,4 @@
-import { School } from "lucide-react";
+import { Book } from "lucide-react";
 
 import NotFound from "@/components/NotFound";
 import { CourseModal } from "@/components/modals/CourseModal";
@@ -19,7 +19,7 @@ export default function Course() {
         </div>
       ) : (
         <NotFound
-          Icon={School}
+          Icon={Book}
           title="No course found"
           description="You currently have no course."
         />

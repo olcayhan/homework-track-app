@@ -1,9 +1,4 @@
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import useModal from "@/hooks/useModal";
 import { EllipsisVertical, Image, Pen, Trash } from "lucide-react";
@@ -21,12 +16,14 @@ import {
 import { Course } from "@/types/Course";
 import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { useNavigate } from "react-router-dom";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
+  const navigate = useNavigate();
   const { deleteCourse } = useCourse();
   return (
-    <Card>
+    <Card className="cursor-pointer" onClick={() => navigate(`/course/${course.id}`)}>
       <CardHeader className="relative">
         <Popover>
           <PopoverTrigger asChild>
@@ -34,6 +31,7 @@ const CourseItem = ({ course }: { course: Course }) => {
               size={"icon"}
               variant={"ghost"}
               className="absolute top-1 right-1"
+              onClick={(e) => e.stopPropagation()}
             >
               <EllipsisVertical />
             </Button>

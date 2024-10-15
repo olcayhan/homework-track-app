@@ -5,7 +5,7 @@ import AssignmentItem from "@/components/assignment/AssignmentItem";
 import useAssignment from "@/hooks/useAssignment";
 import NotFound from "@/components/NotFound";
 
-export default function Home() {
+export default function Assignment() {
   const assignments = useAssignment((state) => state.assignment);
 
   return (
