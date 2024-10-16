@@ -17,7 +17,7 @@ export function CourseModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="w-full"
+          className="w-full h-full"
           onClick={() => {
             isEditing(false, null);
             setOpen(true);
