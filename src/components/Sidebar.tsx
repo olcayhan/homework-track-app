@@ -12,8 +12,8 @@ export default function Sidebar() {
     },
   ];
   return (
-    <div className="w-72 p-4 h-full flex flex-col justify-between items-center border-r border-neutral-950">
-      <div className="w-full space-y-4">
+    <div className="relative w-72 p-4 h-full flex flex-col justify-between items-center border-r border-neutral-950">
+      <div className="sticky top-4 w-full space-y-4">
         <div className="flex items-center">
           <span className="ml-2 text-lg font-semibold">Homework App</span>
         </div>
