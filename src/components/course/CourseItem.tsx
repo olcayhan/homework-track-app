@@ -1,4 +1,10 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Button } from "../ui/button";
 import useModal from "@/hooks/useModal";
 import { EllipsisVertical, Image, Pen, Trash } from "lucide-react";
@@ -16,17 +22,13 @@ import {
 import { Course } from "@/types/Course";
 import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
-  const navigate = useNavigate();
   const { deleteCourse } = useCourse();
   return (
-    <Card
-      className="cursor-pointer"
-      onClick={() => navigate(`/course/${course.id}`)}
-    >
+    <Card>
       <CardHeader className="relative">
         <Popover>
           <PopoverTrigger asChild>
@@ -34,16 +36,11 @@ const CourseItem = ({ course }: { course: Course }) => {
               size={"icon"}
               variant={"ghost"}
               className="absolute top-1 right-1"
-              onClick={(e) => e.stopPropagation()}
             >
               <EllipsisVertical />
             </Button>
           </PopoverTrigger>
-          <PopoverContent
-            className="w-56"
-            align="start"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <PopoverContent className="w-56" align="start">
             <div className="grid gap-4">
               <h4 className="font-medium leading-none">Options</h4>
               <div className="grid gap-2">
@@ -109,6 +106,19 @@ const CourseItem = ({ course }: { course: Course }) => {
           dangerouslySetInnerHTML={{ __html: course.description }}
         ></CardDescription>
       </CardHeader>
+      <CardFooter>
+        <div className="w-full space-y-2">
+          <Button className="w-full" asChild>
+            <Link to={`/course/${course.id}`}>Assignments</Link>
+          </Button>
+          <Button
+            className="w-full bg-neutral-300 text-black hover:bg-neutral-400"
+            asChild
+          >
+            <Link to={`/course/${course.id}/students`}>Students</Link>
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };

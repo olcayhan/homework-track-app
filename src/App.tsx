@@ -16,7 +16,7 @@ function App() {
           <Route index element={<Course />} />
           <Route path="/course/:id" element={<Assignment />} />
           <Route path="/submission" element={<Submission />} />
-          <Route path="/student" element={<Student />} />
+          <Route path="/course/:id/students" element={<Student />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
