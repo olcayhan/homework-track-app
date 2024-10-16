@@ -17,9 +17,11 @@ export default function Assignment() {
       </div>
 
       {assignments.length > 0 ? (
-        assignments.map((assignment) => (
-          <AssignmentItem key={assignment.id} assignment={assignment} />
-        ))
+        <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3 p-3">
+          {assignments.map((assignment) => (
+            <AssignmentItem key={assignment.id} assignment={assignment} />
+          ))}
+        </div>
       ) : (
         <NotFound
           Icon={File}

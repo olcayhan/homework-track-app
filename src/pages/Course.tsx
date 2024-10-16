@@ -16,7 +16,7 @@ export default function Course() {
         <CourseModal />
       </div>
       {courses.length > 0 ? (
-        <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3">
+        <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3 p-3">
           {courses.map((course) => (
             <CourseItem key={course.id} course={course} />
           ))}
