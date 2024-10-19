@@ -18,6 +18,7 @@ export function CourseModal() {
       <DialogTrigger asChild>
         <Button
           className="w-full h-full"
+          variant={"outline"}
           onClick={() => {
             isEditing(false, null);
             setOpen(true);
