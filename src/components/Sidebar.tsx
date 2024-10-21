@@ -1,19 +1,35 @@
 import { Link } from "react-router-dom";
-import { Book, User } from "lucide-react";
+import { Book, File, Package, Paperclip, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import useRole from "@/hooks/useRole";
 
 export default function Sidebar() {
+  const { role } = useRole();
   const navItems = [
     {
       icon: Book,
       title: "Courses",
       href: "/",
+      roles: ["student", "teacher"],
+    },
+    {
+      icon: File,
+      title: "Assignments",
+      href: "/assignment",
+      roles: ["student", "teacher"],
+    },
+    {
+      icon: Paperclip,
+      title: "Submissions",
+      href: "/submission",
+      roles: ["student"],
     },
     {
       icon: User,
       title: "Profile",
       href: "/profile",
+      roles: ["student", "teacher"],
     },
   ];
   return (
@@ -23,19 +39,21 @@ export default function Sidebar() {
           <span className="ml-2 text-lg font-semibold">Homework App</span>
         </div>
         <nav className="space-y-2">
-          {navItems.map((item) => (
-            <Button
-              key={item.href}
-              variant={"ghost"}
-              className="w-full justify-start"
-              asChild
-            >
-              <Link to={item.href}>
-                <item.icon className="mr-2 h-4 w-4" />
-                {item.title}
-              </Link>
-            </Button>
-          ))}
+          {navItems
+            .filter((item) => item.roles.includes(role))
+            .map((item) => (
+              <Button
+                key={item.href}
+                variant={"ghost"}
+                className="w-full justify-start"
+                asChild
+              >
+                <Link to={item.href}>
+                  <item.icon className="mr-2 h-4 w-4" />
+                  {item.title}
+                </Link>
+              </Button>
+            ))}
         </nav>
       </div>
     </div>
