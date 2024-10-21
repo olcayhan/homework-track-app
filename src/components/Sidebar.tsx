@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Book } from "lucide-react";
+import { Book, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -9,6 +9,11 @@ export default function Sidebar() {
       icon: Book,
       title: "Courses",
       href: "/",
+    },
+    {
+      icon: User,
+      title: "Profile",
+      href: "/profile",
     },
   ];
   return (

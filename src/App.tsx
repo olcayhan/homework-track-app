@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import ForgetPassword from "./pages/ForgetPassword";
 import Course from "./pages/Course";
 import Assignment from "./pages/Assignment";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/course/:id" element={<Assignment />} />
           <Route path="/submission" element={<Submission />} />
           <Route path="/course/:id/students" element={<Student />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

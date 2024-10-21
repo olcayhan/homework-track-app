@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,14 +35,10 @@ const formSchema = z.object({
       /[^A-Za-z0-9]/,
       "Password must contain at least one special character"
     ),
-
-  studentNumber: z.string().min(2, {
-    message: "Description must be at least 2 characters.",
-  }),
   profileImagePath: z.string(),
 });
 
-export function StudentForm() {
+export default function ProfileForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +46,6 @@ export function StudentForm() {
       surname: "",
       email: "",
       password: "",
-      studentNumber: "",
       profileImagePath: "",
     },
   });
@@ -123,26 +116,13 @@ export function StudentForm() {
             <FormItem className="flex flex-col">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="enter password" {...field} />
+                <PasswordInput placeholder="enter new password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="studentNumber"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Student Number</FormLabel>
-              <FormControl>
-                <Input placeholder="2015..." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </form>
     </Form>
   );
