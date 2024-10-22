@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Book, File, Package, Paperclip, User } from "lucide-react";
+import { Book, File, Paperclip, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import useRole from "@/hooks/useRole";

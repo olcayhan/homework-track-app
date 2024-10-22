@@ -8,7 +8,6 @@ import ForgetPassword from "./pages/ForgetPassword";
 import Course from "./pages/Course";
 import Assignment from "./pages/Assignment";
 import Profile from "./pages/Profile";
-import { Component } from "react";
 import useRole from "./hooks/useRole";
 
 interface Props {
