@@ -23,73 +23,78 @@ import { Course } from "@/types/Course";
 import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Link } from "react-router-dom";
+import useRole from "@/hooks/useRole";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
   const { deleteCourse } = useCourse();
+  const { role } = useRole();
   return (
     <Card>
       <CardHeader className="relative">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              size={"icon"}
-              variant={"ghost"}
-              className="absolute top-1 right-1"
-            >
-              <EllipsisVertical />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-56" align="start">
-            <div className="grid gap-4">
-              <h4 className="font-medium leading-none">Options</h4>
-              <div className="grid gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    isEditing(true, course.id);
-                    setOpen(true);
-                  }}
-                >
-                  <Pen className="mr-2 w-4 h-4" />
-                  Edit
-                </Button>
+        {role === "teacher" && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                size={"icon"}
+                variant={"ghost"}
+                className="absolute top-1 right-1"
+              >
+                <EllipsisVertical />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-56" align="start">
+              <div className="grid gap-4">
+                <h4 className="font-medium leading-none">Options</h4>
+                <div className="grid gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      isEditing(true, course.id);
+                      setOpen(true);
+                    }}
+                  >
+                    <Pen className="mr-2 w-4 h-4" />
+                    Edit
+                  </Button>
 
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button className="text-white bg-red-700 hover:bg-red-800">
-                      <Trash className="mr-2 w-4 h-4" />
-                      Delete
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you absolutely sure?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => {
-                          deleteCourse(course.id);
-                        }}
-                        className="bg-red-700 hover:bg-red-800"
-                      >
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className="text-white bg-red-700 hover:bg-red-800">
+                        <Trash className="mr-2 w-4 h-4" />
                         Delete
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your account and remove your data from our
+                          servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            deleteCourse(course.id);
+                          }}
+                          className="bg-red-700 hover:bg-red-800"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
-            </div>
-          </PopoverContent>
-        </Popover>
+            </PopoverContent>
+          </Popover>
+        )}
+
         {course.imageURL ? (
           <img
             className="h-60 w-60 object-contain"
@@ -111,12 +116,14 @@ const CourseItem = ({ course }: { course: Course }) => {
           <Button className="w-full" asChild>
             <Link to={`/course/${course.id}`}>Assignments</Link>
           </Button>
-          <Button
-            className="w-full bg-neutral-300 text-black hover:bg-neutral-400"
-            asChild
-          >
-            <Link to={`/course/${course.id}/students`}>Students</Link>
-          </Button>
+          {role === "teacher" && (
+            <Button
+              className="w-full bg-neutral-300 text-black hover:bg-neutral-400"
+              asChild
+            >
+              <Link to={`/course/${course.id}/students`}>Students</Link>
+            </Button>
+          )}
         </div>
       </CardFooter>
     </Card>
