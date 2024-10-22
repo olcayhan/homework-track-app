@@ -23,10 +23,13 @@ import {
   AlertDialogHeader,
 } from "../ui/alert-dialog";
 import useAssignment from "@/hooks/useAssignment";
+import useRole from "@/hooks/useRole";
+import { SubmitAssignModal } from "../modals/SubmitAssignModal";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
   const { setOpen, isEditing } = useModal();
   const { deleteAssignment } = useAssignment();
+  const { role } = useRole();
   return (
     <Card className="w-full">
       <CardHeader>
@@ -58,45 +61,50 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
         ))}
       </CardContent>
       <CardFooter className="justify-end gap-3">
-        <Button
-          variant="outline"
-          onClick={() => {
-            isEditing(true, assignment.id);
-            setOpen(true);
-          }}
-        >
-          <Pen className="mr-2 w-4 h-4" />
-          Edit
-        </Button>
-
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button className="text-white bg-red-700 hover:bg-red-800">
-              <Trash className="mr-2 w-4 h-4" />
-              Delete
+        {role === "teacher" && (
+          <>
+            <Button
+              variant="outline"
+              onClick={() => {
+                isEditing(true, assignment.id);
+                setOpen(true);
+              }}
+            >
+              <Pen className="mr-2 w-4 h-4" />
+              Edit
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  deleteAssignment(assignment.id);
-                }}
-                className="bg-red-700 hover:bg-red-800"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button className="text-white bg-red-700 hover:bg-red-800">
+                  <Trash className="mr-2 w-4 h-4" />
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => {
+                      deleteAssignment(assignment.id);
+                    }}
+                    className="bg-red-700 hover:bg-red-800"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
+        )}
+
+        {role === "student" && <SubmitAssignModal />}
       </CardFooter>
     </Card>
   );
