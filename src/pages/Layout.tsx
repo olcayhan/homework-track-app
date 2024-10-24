@@ -1,12 +1,16 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/AppSidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 const Layout = () => {
   return (
-    <div className="w-full h-screen flex flex-row justify-start items-start">
-      <Sidebar />
-      <Outlet />
-    </div>
+    <SidebarProvider>
+      <div className="w-full h-screen flex flex-row justify-start items-start">
+        <Sidebar />
+        <SidebarTrigger />
+        <Outlet />
+      </div>
+    </SidebarProvider>
   );
 };
 
