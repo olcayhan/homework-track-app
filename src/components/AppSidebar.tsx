@@ -5,7 +5,6 @@ import {
   File,
   Paperclip,
   User,
-  User2,
 } from "lucide-react";
 
 import {

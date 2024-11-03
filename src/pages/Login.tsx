@@ -23,6 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { ExclamationTriangleIcon, ReloadIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -34,16 +37,9 @@ const formSchema = z.object({
 });
 
 export default function Login() {
+  const [error, setError] = useState<Error | null>();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const { mutate } = useMutation({
-    mutationFn: login,
-    onSuccess: (data: any) => {
-      setAuth(data);
-      navigate("/");
-    },
-  });
-
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,9 +48,21 @@ export default function Login() {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: login,
+    onSuccess: (data: any) => {
+      setAuth(data);
+      navigate("/");
+      form.reset();
+    },
+    onError(error) {
+      setError(error);
+    },
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setError(null);
     mutate(values);
-    form.reset();
   }
 
   return (
@@ -70,6 +78,14 @@ export default function Login() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
+            {error && (
+              <Alert variant="destructive">
+                <ExclamationTriangleIcon className="h-4 w-4" />
+                <AlertTitle>{error.name}</AlertTitle>
+                <AlertDescription>{error.message}</AlertDescription>
+              </Alert>
+            )}
+
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
@@ -101,7 +117,10 @@ export default function Login() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
+              <Button disabled={isPending} type="submit" className="w-full">
+                {isPending && (
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Sign In
               </Button>
             </form>
