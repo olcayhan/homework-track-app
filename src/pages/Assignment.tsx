@@ -5,12 +5,12 @@ import AssignmentItem from "@/components/assignment/AssignmentItem";
 import useAssignment from "@/hooks/useAssignment";
 import NotFound from "@/components/NotFound";
 import SearchFilterNavbar from "@/components/SearchFilterNavbar";
-import useRole from "@/hooks/useRole";
 import { Role } from "@/types/Role";
+import useAuth from "@/hooks/useAuth";
 
 export default function Assignment() {
   const assignments = useAssignment((state) => state.assignment);
-  const { role } = useRole();
+  const { role } = useAuth();
   return (
     <div className="w-full h-full flex flex-col justify-start items-start gap-3">
       <SearchFilterNavbar />

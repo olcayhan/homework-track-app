@@ -8,8 +8,8 @@ import ForgetPassword from "./pages/ForgetPassword";
 import Course from "./pages/Course";
 import Assignment from "./pages/Assignment";
 import Profile from "./pages/Profile";
-import useRole from "./hooks/useRole";
 import { Role } from "./types/Role";
+import useAuth from "./hooks/useAuth";
 
 interface Props {
   component: React.ComponentType;
@@ -21,7 +21,7 @@ export const PrivateRoute: React.FC<Props> = ({
   component: RouteComponent,
   roles,
 }) => {
-  const { role } = useRole();
+  const { role } = useAuth();
   const userHasRequiredRole = roles.includes(role) ? true : false;
 
   if (userHasRequiredRole) {

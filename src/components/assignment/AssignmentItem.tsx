@@ -23,14 +23,14 @@ import {
   AlertDialogHeader,
 } from "../ui/alert-dialog";
 import useAssignment from "@/hooks/useAssignment";
-import useRole from "@/hooks/useRole";
 import { SubmitAssignModal } from "../modals/SubmitAssignModal";
 import { Role } from "@/types/Role";
+import useAuth from "@/hooks/useAuth";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
   const { setOpen, isEditing } = useModal();
   const { deleteAssignment } = useAssignment();
-  const { role } = useRole();
+  const { role } = useAuth();
   return (
     <Card className="w-full">
       <CardHeader>

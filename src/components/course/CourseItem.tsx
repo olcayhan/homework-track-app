@@ -23,13 +23,13 @@ import { Course } from "@/types/Course";
 import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Link } from "react-router-dom";
-import useRole from "@/hooks/useRole";
 import { Role } from "@/types/Role";
+import useAuth from "@/hooks/useAuth";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
   const { deleteCourse } = useCourse();
-  const { role } = useRole();
+  const { role } = useAuth();
   return (
     <Card>
       <CardHeader className="relative">

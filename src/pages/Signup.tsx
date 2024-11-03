@@ -29,9 +29,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { register } from "@/api/Auth";
+import { Role } from "@/types/Role";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import useAuth from "@/hooks/useAuth";
 
 const formSchema = z.object({
-  role: z.enum(["student", "teacher"], {
+  role: z.enum([Role.Student, Role.Teacher], {
     required_error: "Please select a role.",
   }),
   name: z.string().min(2, {
@@ -51,6 +56,16 @@ const formSchema = z.object({
 type Inputs = z.infer<typeof formSchema>;
 
 export default function Signup() {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const { mutate } = useMutation({
+    mutationFn: register,
+    onSuccess: (data: any) => {
+      setAuth(data);
+      navigate("/");
+    },
+  });
+
   const [step, setStep] = useState(0);
   const stepForms = [
     { formValues: ["role"] },
@@ -84,10 +99,9 @@ export default function Signup() {
     setStep((prev) => prev - 1);
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    mutate({ ...values, role: Role.Student ? 0 : 1 });
     form.reset();
-    setStep(0);
   }
 
   return (
@@ -118,8 +132,12 @@ export default function Signup() {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Roles</SelectLabel>
-                                <SelectItem value="student">Student</SelectItem>
-                                <SelectItem value="teacher">Teacher</SelectItem>
+                                <SelectItem value={Role.Student}>
+                                  Student
+                                </SelectItem>
+                                <SelectItem value={Role.Teacher}>
+                                  Teacher
+                                </SelectItem>
                               </SelectGroup>
                             </SelectContent>
                           </Select>

@@ -1,6 +1,5 @@
 import { Book, ChevronDown, File, Paperclip, User } from "lucide-react";
 
-import useRole from "@/hooks/useRole";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +19,7 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { Role } from "@/types/Role";
+import useAuth from "@/hooks/useAuth";
 
 const navItems = [
   {
@@ -58,7 +58,7 @@ const courseItems = [
 ];
 
 export default function AppSidebar() {
-  const { role } = useRole();
+  const { role } = useAuth();
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row justify-center items-center">

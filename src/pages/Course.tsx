@@ -6,12 +6,12 @@ import useCourse from "@/hooks/useCourse";
 import CourseItem from "@/components/course/CourseItem";
 import SearchFilterNavbar from "@/components/SearchFilterNavbar";
 import AttendCourseModal from "@/components/modals/AttendCourseModal";
-import useRole from "@/hooks/useRole";
 import { Role } from "@/types/Role";
+import useAuth from "@/hooks/useAuth";
 
 export default function Course() {
   const courses = useCourse((state) => state.course);
-  const { role } = useRole();
+  const { role } = useAuth();
   return (
     <div className="relative w-full h-full flex flex-col justify-start items-start gap-3">
       <SearchFilterNavbar />
