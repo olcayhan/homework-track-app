@@ -32,8 +32,9 @@ import {
 import { register } from "@/api/Auth";
 import { Role } from "@/types/Role";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
+import { ArrowLeft } from "lucide-react";
 
 const formSchema = z.object({
   role: z.enum([Role.Student, Role.Teacher], {
@@ -245,6 +246,15 @@ export default function Signup() {
               ) : (
                 <Button type="submit">Submit</Button>
               )}
+            </CardFooter>
+            <CardFooter className="flex justify-center">
+              <Link
+                to="/login"
+                className="text-sm text-muted-foreground flex items-center hover:text-primary transition-colors"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Login
+              </Link>
             </CardFooter>
           </form>
         </Form>
