@@ -35,7 +35,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route element={<Layout />}>
           <Route index element={<Course />} />
           <Route path="/course/:id" element={<Assignment />} />
           <Route
@@ -59,6 +59,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
     </BrowserRouter>
   );
