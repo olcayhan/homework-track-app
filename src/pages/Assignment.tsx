@@ -6,6 +6,7 @@ import useAssignment from "@/hooks/useAssignment";
 import NotFound from "@/components/NotFound";
 import SearchFilterNavbar from "@/components/SearchFilterNavbar";
 import useRole from "@/hooks/useRole";
+import { Role } from "@/types/Role";
 
 export default function Assignment() {
   const assignments = useAssignment((state) => state.assignment);
@@ -14,7 +15,7 @@ export default function Assignment() {
     <div className="w-full h-full flex flex-col justify-start items-start gap-3">
       <SearchFilterNavbar />
       <div className="fixed right-10 bottom-10 w-64 h-12">
-        {role === "teacher" && <AssignmentModal />}
+        {role === Role.Teacher && <AssignmentModal />}
       </div>
 
       {assignments.length > 0 ? (

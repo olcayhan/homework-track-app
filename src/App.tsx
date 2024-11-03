@@ -9,11 +9,12 @@ import Course from "./pages/Course";
 import Assignment from "./pages/Assignment";
 import Profile from "./pages/Profile";
 import useRole from "./hooks/useRole";
+import { Role } from "./types/Role";
 
 interface Props {
   component: React.ComponentType;
   path?: string;
-  roles: "student" | "teacher";
+  roles: Role[];
 }
 
 export const PrivateRoute: React.FC<Props> = ({
@@ -39,11 +40,18 @@ function App() {
           <Route path="/course/:id" element={<Assignment />} />
           <Route
             path="/submission"
-            element={<PrivateRoute roles="student" component={Submission} />}
+            element={
+              <PrivateRoute roles={[Role.Student]} component={Submission} />
+            }
           />
           <Route
             path="/assignment"
-            element={<PrivateRoute roles="student" component={Assignment} />}
+            element={
+              <PrivateRoute
+                roles={[Role.Student, Role.Teacher]}
+                component={Assignment}
+              />
+            }
           />
           <Route path="/course/:id/students" element={<Student />} />
           <Route path="/profile" element={<Profile />} />

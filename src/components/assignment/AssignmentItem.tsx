@@ -25,6 +25,7 @@ import {
 import useAssignment from "@/hooks/useAssignment";
 import useRole from "@/hooks/useRole";
 import { SubmitAssignModal } from "../modals/SubmitAssignModal";
+import { Role } from "@/types/Role";
 
 const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
   const { setOpen, isEditing } = useModal();
@@ -61,7 +62,7 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
         ))}
       </CardContent>
       <CardFooter className="justify-end gap-3">
-        {role === "teacher" && (
+        {role === Role.Teacher && (
           <>
             <Button
               variant="outline"
@@ -104,7 +105,7 @@ const AssignmentItem = ({ assignment }: { assignment: Assignment }) => {
           </>
         )}
 
-        {role === "student" && <SubmitAssignModal />}
+        {role === Role.Student && <SubmitAssignModal />}
       </CardFooter>
     </Card>
   );

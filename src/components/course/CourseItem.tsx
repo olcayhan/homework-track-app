@@ -24,6 +24,7 @@ import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Link } from "react-router-dom";
 import useRole from "@/hooks/useRole";
+import { Role } from "@/types/Role";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
@@ -32,7 +33,7 @@ const CourseItem = ({ course }: { course: Course }) => {
   return (
     <Card>
       <CardHeader className="relative">
-        {role === "teacher" && (
+        {role === Role.Teacher && (
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -116,7 +117,7 @@ const CourseItem = ({ course }: { course: Course }) => {
           <Button className="w-full" asChild>
             <Link to={`/course/${course.id}`}>Assignments</Link>
           </Button>
-          {role === "teacher" && (
+          {role === Role.Teacher && (
             <Button
               className="w-full bg-neutral-300 text-black hover:bg-neutral-400"
               asChild

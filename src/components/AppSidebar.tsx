@@ -19,44 +19,46 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import { Role } from "@/types/Role";
+
+const navItems = [
+  {
+    icon: Book,
+    title: "Courses",
+    href: "/",
+    roles: [Role.Student, Role.Teacher],
+  },
+  {
+    icon: File,
+    title: "Assignments",
+    href: "/assignment",
+    roles: [Role.Student, Role.Teacher],
+  },
+  {
+    icon: Paperclip,
+    title: "Submissions",
+    href: "/submission",
+    roles: [Role.Student],
+  },
+];
+
+const courseItems = [
+  {
+    title: "Biology",
+    href: "/course/1231233513",
+  },
+  {
+    title: "Math",
+    href: "/course/345345",
+  },
+  {
+    title: "Chemistry",
+    href: "/course/4354351",
+  },
+];
 
 export default function AppSidebar() {
   const { role } = useRole();
-  const navItems = [
-    {
-      icon: Book,
-      title: "Courses",
-      href: "/",
-      roles: ["student", "teacher"],
-    },
-    {
-      icon: File,
-      title: "Assignments",
-      href: "/assignment",
-      roles: ["student", "teacher"],
-    },
-    {
-      icon: Paperclip,
-      title: "Submissions",
-      href: "/submission",
-      roles: ["student"],
-    },
-  ];
-
-  const courseItems = [
-    {
-      title: "Biology",
-      href: "/course/1231233513",
-    },
-    {
-      title: "Math",
-      href: "/course/345345",
-    },
-    {
-      title: "Chemistry",
-      href: "/course/4354351",
-    },
-  ];
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row justify-center items-center">
