@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ENDPOINT = "/api/Auth/";
+const API_ENDPOINT = "/api/Auth";
 export const register = async (data: any) => {
   try {
     const response = await axios.post(`${API_ENDPOINT}/register`, data);
