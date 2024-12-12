@@ -96,10 +96,10 @@ const CourseItem = ({ course }: { course: Course }) => {
           </Popover>
         )}
 
-        {course.imageURL ? (
+        {course.imagePath ? (
           <img
             className="h-60 w-60 object-contain"
-            src={course.imageURL}
+            src={course.imagePath}
             alt={course.name}
           />
         ) : (
