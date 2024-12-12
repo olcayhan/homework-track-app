@@ -8,10 +8,22 @@ import SearchFilterNavbar from "@/components/SearchFilterNavbar";
 import AttendCourseModal from "@/components/modals/AttendCourseModal";
 import { Role } from "@/types/Role";
 import useAuth from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { getCourses } from "@/api/Course";
 
 export default function Course() {
   const courses = useCourse((state) => state.course);
   const { role } = useAuth();
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["courses"],
+    queryFn: getCourses,
+    retry: 1,
+  });
+
+  if (error) return <div>Error: {error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <div className="relative w-full h-full flex flex-col justify-start items-start gap-3">
       <SearchFilterNavbar />

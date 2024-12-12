@@ -22,7 +22,7 @@ export const createCourse = async (payload: any) => {
 export const getCourses = async () => {
   try {
     const response = await axios.get(
-      `${API_ENDPOINT}/getCourseByTeacher/${id}`,
+      `${API_ENDPOINT}/getCoursesByTeacher/${id}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
