@@ -20,15 +20,23 @@ import {
   AlertDialogHeader,
 } from "../ui/alert-dialog";
 import { Course } from "@/types/Course";
-import useCourse from "@/hooks/useCourse";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Link } from "react-router-dom";
 import { Role } from "@/types/Role";
 import useAuth from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { deleteCourse } from "@/api/Course";
 
 const CourseItem = ({ course }: { course: Course }) => {
   const { setOpen, isEditing } = useModal();
-  const { deleteCourse } = useCourse();
+
+  const handleDelete = useMutation({
+    mutationFn: deleteCourse,
+    onSuccess: () => {
+      console.log("Course deleted");
+    },
+  });
+
   const { role } = useAuth();
   return (
     <Card>
@@ -81,7 +89,7 @@ const CourseItem = ({ course }: { course: Course }) => {
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => {
-                            deleteCourse(course.id);
+                            handleDelete.mutate(course.id);
                           }}
                           className="bg-red-700 hover:bg-red-800"
                         >
