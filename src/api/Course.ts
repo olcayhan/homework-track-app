@@ -1,17 +1,15 @@
 import axios from "axios";
 
 const API_ENDPOINT = "/api/Course";
-const id = localStorage.getItem("id");
+const userId = localStorage.getItem("id");
 const token = localStorage.getItem("token");
+axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 export const createCourse = async (payload: any) => {
   try {
     const response = await axios.post(
-      `${API_ENDPOINT}/createCourseByTeacher/${id}`,
-      payload.data,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${API_ENDPOINT}/createCourseByTeacher/${userId}`,
+      payload.data
     );
     return response.data;
   } catch (error: any) {
@@ -22,10 +20,18 @@ export const createCourse = async (payload: any) => {
 export const getCourses = async () => {
   try {
     const response = await axios.get(
-      `${API_ENDPOINT}/getCoursesByTeacher/${id}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${API_ENDPOINT}/getCoursesByTeacher/${userId}`
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const deleteCourse = async (id: number) => {
+  try {
+    const response = await axios.patch(
+      `${API_ENDPOINT}/softDeleteCourseBy/${id}`
     );
     return response.data;
   } catch (error: any) {
