@@ -18,8 +18,8 @@ import useModal from "@/hooks/useModal";
 import { useEffect } from "react";
 import ImageUpload from "../ImageUpload";
 import useCourse from "@/hooks/useCourse";
-import { useMutation } from "@tanstack/react-query";
-import { createCourse } from "@/api/Course";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createCourse, getCourseById, updateCourse } from "@/api/Course";
 import useAuth from "@/hooks/useAuth";
 
 const formSchema = z.object({
@@ -33,7 +33,6 @@ const formSchema = z.object({
 });
 
 export function CourseForm() {
-  const { editCourse } = useCourse();
   const { setOpen, edit } = useModal();
   const { id } = useAuth();
 
@@ -44,6 +43,11 @@ export function CourseForm() {
       description: "",
       imagePath: "",
     },
+  });
+
+  const { data: course } = useQuery({
+    queryKey: ["course", edit.id],
+    queryFn: getCourseById,
   });
 
   const createMutation = useMutation({
@@ -57,20 +61,30 @@ export function CourseForm() {
     },
   });
 
-  /*   useEffect(() => {
-    if (edit.isEdit) {
-      const selectedCourse = course.find((item) => item.id === edit.id);
+  const updateMutation = useMutation({
+    mutationFn: updateCourse,
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+    onError(error: any) {
+      console.error(error);
+    },
+  });
+
+  useEffect(() => {
+    if (edit.id !== null && edit.isEdit) {
+      console.log(course.data);
       form.reset({
-        name: selectedCourse?.name,
-        description: selectedCourse?.description,
-        imagePath: selectedCourse?.imageURL,
+        name: course.data?.name,
+        description: course.data?.description,
+        imagePath: course.data?.imagePath,
       });
     }
-  }, [edit.isEdit, edit.id, course, form]); */
+  }, [edit.isEdit, edit.id, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (edit.isEdit && edit.id !== null) {
-      editCourse({ ...values, id: edit.id });
+      updateMutation.mutate({ id: edit.id, data: values });
     } else {
       id &&
         createMutation.mutate({

@@ -60,6 +60,7 @@ const CourseItem = ({ course }: { course: Course }) => {
                     variant="outline"
                     onClick={() => {
                       isEditing(true, course.id);
+                      console.log(course.id);
                       setOpen(true);
                     }}
                   >

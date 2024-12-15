@@ -30,9 +30,9 @@ export default function Course() {
         {role === Role.Student && <AttendCourseModal />}
         {role === Role.Teacher && <CourseModal />}
       </div>
-      {courses.$values.length > 0 ? (
+      {courses.data.length > 0 ? (
         <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3 p-3">
-          {courses.$values.map((course: any) => (
+          {courses.data.map((course: any) => (
             <CourseItem key={course.$id} course={course} />
           ))}
         </div>

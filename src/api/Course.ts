@@ -28,6 +28,29 @@ export const getCourses = async () => {
   }
 };
 
+export const getCourseById = async ({ queryKey }: any) => {
+  try {
+    const [_, id] = queryKey;
+    console.log(id);
+    const response = await axios.get(`${API_ENDPOINT}/getCourseBy/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const updateCourse = async (payload: any) => {
+  try {
+    const response = await axios.patch(
+      `${API_ENDPOINT}/createCourseByTeacher/${payload.id}`,
+      payload.data
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const deleteCourse = async (id: number) => {
   try {
     const response = await axios.patch(
