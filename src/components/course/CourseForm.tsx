@@ -29,7 +29,6 @@ const formSchema = z.object({
     message: "Description must be at least 2 characters.",
   }),
   imagePath: z.string().optional(),
-  code: z.string().optional(),
 });
 
 export function CourseForm() {
@@ -77,7 +76,6 @@ export function CourseForm() {
         name: course.data?.name,
         description: course.data?.description,
         imagePath: course.data?.imagePath,
-        code: course.data?.code,
       });
     }
   }, [course, edit.isEdit, edit.id, form]);
@@ -86,11 +84,7 @@ export function CourseForm() {
     if (edit.isEdit && edit.id !== null) {
       updateMutation.mutate({ id: edit.id, data: values });
     } else {
-      id &&
-        createMutation.mutate({
-          id,
-          data: { ...values, code: Date.now().toString(), teacherId: id },
-        });
+      id && createMutation.mutate(values);
     }
     setOpen(false);
     form.reset();

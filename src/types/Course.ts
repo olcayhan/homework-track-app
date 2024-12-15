@@ -1,12 +1,12 @@
-export type Course = {
-  $id: string;
-  code?: string;
-  description: string;
+export type CourseRequest = {
   name: string;
+  description: string;
   imagePath?: string;
-  homeworks?: any;
-  id: number;
-  status: string;
-  studentCourses?: any;
-  teacherId?: number;
+  teacherId: number;
 };
+
+export interface CourseResponse extends CourseRequest {
+  id: number;
+  code: string;
+  status: string;
+}

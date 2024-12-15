@@ -1,3 +1,4 @@
+import { CourseRequest, CourseResponse } from "@/types/Course";
 import axios from "axios";
 
 const API_ENDPOINT = "/api/Course";
@@ -5,19 +6,21 @@ const userId = localStorage.getItem("id");
 const token = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-export const createCourse = async (payload: any) => {
+export const createCourse = async (
+  payload: Omit<CourseRequest, "teacherId">
+): Promise<CourseResponse> => {
   try {
     const response = await axios.post(
       `${API_ENDPOINT}/createCourseByTeacher/${userId}`,
-      payload.data
+      payload
     );
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown | any) {
     throw new Error(error);
   }
 };
 
-export const getCourses = async () => {
+export const getCourses = async (): Promise<CourseResponse[]> => {
   try {
     const response = await axios.get(
       `${API_ENDPOINT}/getCoursesByTeacher/${userId}`

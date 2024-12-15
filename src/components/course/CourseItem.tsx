@@ -19,7 +19,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
 } from "../ui/alert-dialog";
-import { Course } from "@/types/Course";
+import { CourseResponse } from "@/types/Course";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Link } from "react-router-dom";
 import { Role } from "@/types/Role";
@@ -27,7 +27,7 @@ import useAuth from "@/hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import { deleteCourse } from "@/api/Course";
 
-const CourseItem = ({ course }: { course: Course }) => {
+const CourseItem = ({ course }: { course: CourseResponse }) => {
   const { setOpen, isEditing } = useModal();
 
   const handleDelete = useMutation({

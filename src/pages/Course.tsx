@@ -9,6 +9,7 @@ import { Role } from "@/types/Role";
 import useAuth from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getCourses } from "@/api/Course";
+import { CourseResponse } from "@/types/Course";
 
 export default function Course() {
   const { role } = useAuth();
@@ -30,10 +31,10 @@ export default function Course() {
         {role === Role.Student && <AttendCourseModal />}
         {role === Role.Teacher && <CourseModal />}
       </div>
-      {courses.data.length > 0 ? (
+      {courses && courses.length > 0 ? (
         <div className="w-full flex flex-row justify-start items-center flex-wrap gap-3 p-3">
-          {courses.data.map((course: any) => (
-            <CourseItem key={course.$id} course={course} />
+          {courses.map((course: CourseResponse) => (
+            <CourseItem key={course.id} course={course} />
           ))}
         </div>
       ) : (
