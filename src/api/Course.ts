@@ -42,7 +42,7 @@ export const getCourseById = async ({ queryKey }: any) => {
 export const updateCourse = async (payload: any) => {
   try {
     const response = await axios.patch(
-      `${API_ENDPOINT}/createCourseByTeacher/${payload.id}`,
+      `${API_ENDPOINT}/updateCourseBy/${payload.id}`,
       payload.data
     );
     return response.data;

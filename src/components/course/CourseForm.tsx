@@ -17,7 +17,6 @@ import RichTextEditor from "../RichTextEditor";
 import useModal from "@/hooks/useModal";
 import { useEffect } from "react";
 import ImageUpload from "../ImageUpload";
-import useCourse from "@/hooks/useCourse";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createCourse, getCourseById, updateCourse } from "@/api/Course";
 import useAuth from "@/hooks/useAuth";
@@ -30,6 +29,7 @@ const formSchema = z.object({
     message: "Description must be at least 2 characters.",
   }),
   imagePath: z.string().optional(),
+  code: z.string().optional(),
 });
 
 export function CourseForm() {
@@ -72,15 +72,15 @@ export function CourseForm() {
   });
 
   useEffect(() => {
-    if (edit.id !== null && edit.isEdit) {
-      console.log(course.data);
+    if (course && edit.id !== null && edit.isEdit) {
       form.reset({
         name: course.data?.name,
         description: course.data?.description,
         imagePath: course.data?.imagePath,
+        code: course.data?.code,
       });
     }
-  }, [edit.isEdit, edit.id, form]);
+  }, [course, edit.isEdit, edit.id, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (edit.isEdit && edit.id !== null) {
