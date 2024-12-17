@@ -1,19 +1,33 @@
 import { CourseRequest, CourseResponse } from "@/types/Course";
 import axios from "axios";
 
-const API_ENDPOINT = "/api/Course";
-const userId = localStorage.getItem("id");
-const token = localStorage.getItem("token");
-axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+const getUserId = () => localStorage.getItem("id");
+const getToken = () => localStorage.getItem("token");
+
+const api = axios.create({
+  baseURL: "/api/Course/",
+});
+
+api.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error("Request Interceptor Error:", error);
+    return Promise.reject(error);
+  }
+);
 
 export const createCourse = async (
   payload: Omit<CourseRequest, "teacherId">
 ): Promise<CourseResponse> => {
   try {
-    const response = await axios.post(
-      `${API_ENDPOINT}/createCourseByTeacher/${userId}`,
-      payload
-    );
+    const userId = getUserId();
+    const response = await api.post("createCourseByTeacher/" + userId, payload);
     return response.data;
   } catch (error: unknown | any) {
     throw new Error(error);
@@ -22,10 +36,9 @@ export const createCourse = async (
 
 export const getCourses = async (): Promise<CourseResponse[]> => {
   try {
-    const response = await axios.get(
-      `${API_ENDPOINT}/getCoursesByTeacher/${userId}`
-    );
-    return response.data;
+    const userId = getUserId();
+    const response = await api.get("getActiveCoursesByTeacher/" + userId);
+    return response.data.data;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -34,8 +47,7 @@ export const getCourses = async (): Promise<CourseResponse[]> => {
 export const getCourseById = async ({ queryKey }: any) => {
   try {
     const [_, id] = queryKey;
-    console.log(id);
-    const response = await axios.get(`${API_ENDPOINT}/getCourseBy/${id}`);
+    const response = await api.get("getCourseBy/" + id);
     return response.data;
   } catch (error: any) {
     throw new Error(error);
@@ -44,8 +56,8 @@ export const getCourseById = async ({ queryKey }: any) => {
 
 export const updateCourse = async (payload: any) => {
   try {
-    const response = await axios.patch(
-      `${API_ENDPOINT}/updateCourseBy/${payload.id}`,
+    const response = await api.patch(
+      "/updateCourseBy/" + payload.id,
       payload.data
     );
     return response.data;
@@ -56,9 +68,7 @@ export const updateCourse = async (payload: any) => {
 
 export const deleteCourse = async (id: number) => {
   try {
-    const response = await axios.patch(
-      `${API_ENDPOINT}/softDeleteCourseBy/${id}`
-    );
+    const response = await api.patch("/softDeleteCourseBy/" + id);
     return response.data;
   } catch (error: any) {
     throw new Error(error);
