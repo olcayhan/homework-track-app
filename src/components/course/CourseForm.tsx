@@ -3,24 +3,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-import RichTextEditor from "../RichTextEditor";
+import { Form } from "@/components/ui/form";
 import useModal from "@/hooks/useModal";
 import { useEffect } from "react";
-import ImageUpload from "../ImageUpload";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createCourse, getCourseById, updateCourse } from "@/api/Course";
 import useAuth from "@/hooks/useAuth";
 import { CustomFormField } from "../CustomFormField";
+import { courseFormFields } from "@/data/Course";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -94,36 +84,9 @@ export function CourseForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="imagePath"
-          render={({ field }) => (
-            <CustomFormField label="Image" field={field} type="image" />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <CustomFormField
-              label="Name"
-              placeholder="Biology"
-              field={field}
-              type="input"
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <CustomFormField
-              label="Description"
-              field={field}
-              type="richText"
-            />
-          )}
-        />
+        {courseFormFields.map((field) => (
+          <CustomFormField key={field.name} control={form.control} {...field} />
+        ))}
         <Button disabled={createMutation.isPending} type="submit">
           Submit
         </Button>
