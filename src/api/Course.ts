@@ -5,7 +5,7 @@ const getUserId = () => localStorage.getItem("id");
 const getToken = () => localStorage.getItem("token");
 
 const api = axios.create({
-  baseURL: "/api/Course/",
+  baseURL: "/api/course/",
 });
 
 api.interceptors.request.use(
@@ -27,7 +27,7 @@ export const createCourse = async (
 ): Promise<CourseResponse> => {
   try {
     const userId = getUserId();
-    const response = await api.post("createCourseByTeacher/" + userId, payload);
+    const response = await api.post("create/teacher/" + userId, payload);
     return response.data;
   } catch (error: unknown | any) {
     throw new Error(error);
@@ -37,7 +37,7 @@ export const createCourse = async (
 export const getCourses = async (): Promise<CourseResponse[]> => {
   try {
     const userId = getUserId();
-    const response = await api.get("getActiveCoursesByTeacher/" + userId);
+    const response = await api.get("teacher/" + userId);
     return response.data.data;
   } catch (error: any) {
     throw new Error(error);
@@ -47,7 +47,7 @@ export const getCourses = async (): Promise<CourseResponse[]> => {
 export const getCourseById = async ({ queryKey }: any) => {
   try {
     const [_, id] = queryKey;
-    const response = await api.get("getCourseBy/" + id);
+    const response = await api.get("course/" + id);
     return response.data;
   } catch (error: any) {
     throw new Error(error);
@@ -57,7 +57,7 @@ export const getCourseById = async ({ queryKey }: any) => {
 export const updateCourse = async (payload: any) => {
   try {
     const response = await api.patch(
-      "/updateCourseBy/" + payload.id,
+      "/course/update/" + payload.id,
       payload.data
     );
     return response.data;
@@ -68,7 +68,7 @@ export const updateCourse = async (payload: any) => {
 
 export const deleteCourse = async (id: number) => {
   try {
-    const response = await api.patch("/softDeleteCourseBy/" + id);
+    const response = await api.patch("/delete/" + id);
     return response.data;
   } catch (error: any) {
     throw new Error(error);
