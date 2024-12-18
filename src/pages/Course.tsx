@@ -22,6 +22,7 @@ export default function Course() {
     queryKey: ["courses"],
     queryFn: getCourses,
   });
+
   if (error) return <div>Error: {error.message}</div>;
   if (isLoading) return <div>Loading...</div>;
   return (

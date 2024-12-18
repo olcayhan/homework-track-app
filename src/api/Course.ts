@@ -27,7 +27,10 @@ export const createCourse = async (
 ): Promise<CourseResponse> => {
   try {
     const userId = getUserId();
-    const response = await api.post("create/teacher/" + userId, payload);
+    const response = await api.post("create/teacher/" + userId, {
+      ...payload,
+      teacherId: userId,
+    });
     return response.data;
   } catch (error: unknown | any) {
     throw new Error(error);
@@ -54,12 +57,10 @@ export const getCourseById = async ({ queryKey }: any) => {
   }
 };
 
-export const updateCourse = async (payload: any) => {
+export const updateCourse = async (payload: Omit<CourseRequest, "teacherId">) => {
   try {
-    const response = await api.patch(
-      "/course/update/" + payload.id,
-      payload.data
-    );
+    console.log(payload);
+    const response = await api.patch("/update/" + payload.id, payload);
     return response.data;
   } catch (error: any) {
     throw new Error(error);
