@@ -20,6 +20,7 @@ import ImageUpload from "../ImageUpload";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createCourse, getCourseById, updateCourse } from "@/api/Course";
 import useAuth from "@/hooks/useAuth";
+import { CustomFormField } from "../CustomFormField";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -97,39 +98,30 @@ export function CourseForm() {
           control={form.control}
           name="imagePath"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <ImageUpload value={field.value} onChange={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <CustomFormField label="Image" field={field} type="image" />
           )}
         />
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Biology" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <CustomFormField
+              label="Name"
+              placeholder="Biology"
+              field={field}
+              type="input"
+            />
           )}
         />
         <FormField
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <RichTextEditor value={field.value} onChange={field.onChange} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <CustomFormField
+              label="Description"
+              field={field}
+              type="richText"
+            />
           )}
         />
         <Button disabled={createMutation.isPending} type="submit">
