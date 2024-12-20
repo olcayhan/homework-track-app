@@ -57,9 +57,10 @@ export const getCourseById = async ({ queryKey }: any) => {
   }
 };
 
-export const updateCourse = async (payload: Omit<CourseRequest, "teacherId">) => {
+export const updateCourse = async (
+  payload: Omit<CourseRequest, "teacherId">
+) => {
   try {
-    console.log(payload);
     const response = await api.patch("/update/" + payload.id, payload);
     return response.data;
   } catch (error: any) {

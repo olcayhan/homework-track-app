@@ -21,8 +21,10 @@ const formSchema = z.object({
 });
 
 export function CourseForm() {
-  const { setOpen, edit } = useModal();
-  const { course, updateMutation, createMutation } = useCourseForm(edit.id);
+  const { closeModal, mode, id } = useModal();
+  const { course, updateMutation, createMutation } = useCourseForm(
+    mode === "edit" ? id : null
+  );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,20 +33,19 @@ export function CourseForm() {
       imagePath: "",
     },
   });
-  
+
   useEffect(() => {
-    if (course && edit.id !== null && edit.isEdit) {
-      form.reset({ ...course.data });
-    }
-  }, [course, edit.isEdit, edit.id, form]);
+    if (course) form.reset(course.data);
+  }, [course, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (edit.isEdit && edit.id !== null) {
-      updateMutation.mutate({ ...values, id: edit.id });
+    if (mode === "edit") {
+      console.log(course);
+      updateMutation.mutate({ ...course.data, ...values });
     } else {
       createMutation.mutate(values);
     }
-    setOpen(false);
+    closeModal();
     form.reset();
   }
 

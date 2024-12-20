@@ -12,17 +12,14 @@ import { Plus } from "lucide-react";
 import { CourseForm } from "../course/CourseForm";
 
 export function CourseModal() {
-  const { open, setOpen, edit, isEditing } = useModal();
+  const { isOpen, mode, openModal, closeModal } = useModal();
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogTrigger asChild>
         <Button
           className="w-full h-full"
           variant={"outline"}
-          onClick={() => {
-            isEditing(false, null);
-            setOpen(true);
-          }}
+          onClick={() => openModal("create")}
         >
           <Plus className="w-4 h-4 mr-1" />
           Add Course
@@ -31,10 +28,10 @@ export function CourseModal() {
       <DialogContent className="sm:max-w-[425px] lg:max-w-[800px] lg:max-h-[700px] overflow-auto">
         <DialogHeader>
           <DialogTitle>
-            {edit.isEdit ? "Edit Course" : "Add Course"}
+            {mode === "edit" ? "Edit Course" : "Add Course"}
           </DialogTitle>
           <DialogDescription>
-            {edit.isEdit
+            {mode === "edit"
               ? "Edit your course and update"
               : "Create a new course for your students."}
           </DialogDescription>

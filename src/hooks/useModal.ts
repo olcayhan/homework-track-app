@@ -1,26 +1,31 @@
 import { create } from "zustand";
 
-type Store = {
-  open: boolean;
-  edit: {
-    isEdit: boolean;
-    id: number | null;
-  };
-  isEditing: (open: boolean, id: number | null) => void;
-  setOpen: (open: boolean) => void;
+type MODAL_MODE = "create" | "edit" | null;
+
+type STORE = {
+  isOpen: boolean;
+  mode: MODAL_MODE;
+  id: number | null;
+  openModal: (mode: MODAL_MODE, id?: number) => void;
+  closeModal: () => void;
 };
 
-const useModal = create<Store>((set) => ({
-  open: false,
-  edit: { isEdit: false, id: 0 },
-  isEditing: (edit, id) =>
+const useModal = create<STORE>((set) => ({
+  isOpen: false,
+  mode: null,
+  id: null,
+  openModal: (mode, id) =>
     set({
-      edit: {
-        isEdit: edit,
-        id: id,
-      },
+      isOpen: true,
+      mode,
+      id,
     }),
-  setOpen: (open) => set({ open }),
+  closeModal: () =>
+    set({
+      isOpen: false,
+      mode: null,
+      id: null,
+    }),
 }));
 
 export default useModal;

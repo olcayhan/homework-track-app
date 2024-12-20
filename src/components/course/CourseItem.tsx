@@ -28,7 +28,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteCourse } from "@/api/Course";
 
 const CourseItem = ({ course }: { course: CourseResponse }) => {
-  const { setOpen, isEditing } = useModal();
+  const { openModal } = useModal();
 
   const handleDelete = useMutation({
     mutationFn: deleteCourse,
@@ -58,11 +58,7 @@ const CourseItem = ({ course }: { course: CourseResponse }) => {
                 <div className="grid gap-2">
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      isEditing(true, course.id);
-                      console.log(course.id);
-                      setOpen(true);
-                    }}
+                    onClick={() => openModal("edit", course.id)}
                   >
                     <Pen className="mr-2 w-4 h-4" />
                     Edit
@@ -89,9 +85,7 @@ const CourseItem = ({ course }: { course: CourseResponse }) => {
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={() => {
-                            handleDelete.mutate(course.id);
-                          }}
+                          onClick={() => handleDelete.mutate(course.id)}
                           className="bg-red-700 hover:bg-red-800"
                         >
                           Delete
